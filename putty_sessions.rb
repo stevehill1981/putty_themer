@@ -37,8 +37,8 @@ end
 
 def get_font_settings
 	{
-		"Font" => "Fira OT Mono",
-		"FontHeight" => 14
+		"Font" => "Fira Mono OT",
+		"FontHeight" => 12
 	}
 end
 
@@ -46,11 +46,17 @@ def get_putty_sessions
 	sessions = []
 	keyname = "Software\\SimonTatham\\PuTTY\\Sessions"
 	access = Win32::Registry::KEY_ALL_ACCESS
+
+	puts "Retrieving sessions from Windows registry..."
 	Win32::Registry::HKEY_CURRENT_USER.open(keyname, access) do |reg|
 		reg.open("").each_key do |regkey|
 			sessions << regkey
 		end
 	end
+
+	puts "Found the following sessions:"
+	p sessions
+
 	sessions
 end
 
@@ -58,6 +64,7 @@ def add_colours_to_sessions(sessions, colours, font_settings)
 	base_keyname = "Software\\SimonTatham\\PuTTY\\Sessions"
 	access = Win32::Registry::KEY_ALL_ACCESS
 	sessions.each do |s|
+	    puts "Adding colours and font to session #{s}..."
 		keyname = base_keyname + "\\" + s
 		Win32::Registry::HKEY_CURRENT_USER.open(keyname, access) do |k,v|
 			colours.each do |ck,cv|
