@@ -37,8 +37,8 @@ end
 
 def get_font_settings
 	{
-		"Font" => "Menlo",
-		"FontHeight" => 11
+		"Font" => "Fira OT Mono",
+		"FontHeight" => 14
 	}
 end
 
